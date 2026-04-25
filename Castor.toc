@@ -1,0 +1,14 @@
+## Interface: 120000,120001,120005
+## Title: Castor
+## Notes: Action tracker that matters
+## Author: Frederick Tyteca
+## Version: 0.1
+## SavedVariables: CastorDB
+
+Castor.lua
+Config.lua
+Display.lua
+Tracker.lua
+Visibility.lua
+Options.lua
+EditMode.lua
