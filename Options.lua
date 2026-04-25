@@ -1,5 +1,6 @@
 local _, Castor = ...
 local Options = Castor.Options
+local L = Castor.L
 
 local function db()
     return Castor.Config.db
@@ -158,39 +159,39 @@ function Options:Build()
     local widgets = self.refreshables
     local y = 0
 
-    table.insert(widgets, makeSlider(content, "maxIcons",  1,   20,  1,    "Number of icons",  content, y))   y = y - 36
-    table.insert(widgets, makeSlider(content, "iconSize",  16,  96,  1,    "Icon size",        content, y))   y = y - 36
-    table.insert(widgets, makeSlider(content, "spacing",   0,   20,  1,    "Spacing",          content, y))   y = y - 36
-    table.insert(widgets, makeSlider(content, "iconAlpha", 0.1, 1.0, 0.1,  "Opacity",          content, y))   y = y - 36
-    table.insert(widgets, makeSlider(content, "hideAfter", 0,   60,  1,    "Hide after (sec)", content, y))   y = y - 40
+    table.insert(widgets, makeSlider(content, "maxIcons",  1,   20,  1,    L["Number of icons"], content, y))   y = y - 36
+    table.insert(widgets, makeSlider(content, "iconSize",  16,  96,  1,    L["Icon size"],       content, y))   y = y - 36
+    table.insert(widgets, makeSlider(content, "spacing",   0,   20,  1,    L["Spacing"],         content, y))   y = y - 36
+    table.insert(widgets, makeSlider(content, "iconAlpha", 0.1, 1.0, 0.1,  L["Opacity"],         content, y))   y = y - 36
+    table.insert(widgets, makeSlider(content, "hideAfter", 0,   60,  1,    L["Hide after (sec)"], content, y))  y = y - 40
 
-    table.insert(widgets, makeCycleButton(content, "direction", "Direction", {
-        { value = "horizontal_lr", label = "Horizontal: left to right" },
-        { value = "horizontal_rl", label = "Horizontal: right to left" },
-        { value = "vertical_td",   label = "Vertical: top to bottom"   },
-        { value = "vertical_bu",   label = "Vertical: bottom to top"   },
+    table.insert(widgets, makeCycleButton(content, "direction", L["Direction"], {
+        { value = "horizontal_lr", label = L["Horizontal: left to right"] },
+        { value = "horizontal_rl", label = L["Horizontal: right to left"] },
+        { value = "vertical_td",   label = L["Vertical: top to bottom"]   },
+        { value = "vertical_bu",   label = L["Vertical: bottom to top"]   },
     }, content, y)) y = y - 44
 
-    table.insert(widgets, makeCycleButton(content, "lines", "Rows / columns", {
-        { value = 1, label = "1 line" },
-        { value = 2, label = "2 lines" },
+    table.insert(widgets, makeCycleButton(content, "lines", L["Rows / columns"], {
+        { value = 1, label = L["1 line"]  },
+        { value = 2, label = L["2 lines"] },
     }, content, y)) y = y - 44
 
-    table.insert(widgets, makeCycleButton(content, "visibilityMode", "Visibility", {
-        { value = "always",        label = "Always visible"  },
-        { value = "in_combat",     label = "In combat only"  },
-        { value = "out_of_combat", label = "Out of combat"   },
+    table.insert(widgets, makeCycleButton(content, "visibilityMode", L["Visibility"], {
+        { value = "always",        label = L["Always visible"] },
+        { value = "in_combat",     label = L["In combat only"] },
+        { value = "out_of_combat", label = L["Out of combat"]  },
     }, content, y)) y = y - 44
 
-    table.insert(widgets, makeCheckbox(content, "trackSpells", "Track spells", content, y)) y = y - 22
-    table.insert(widgets, makeCheckbox(content, "trackItems",  "Track items",  content, y)) y = y - 22
-    table.insert(widgets, makeCheckbox(content, "onlySuccess", "Only successful casts", content, y)) y = y - 22
-    table.insert(widgets, makeCheckbox(content, "locked",      "Lock frame", content, y)) y = y - 30
+    table.insert(widgets, makeCheckbox(content, "trackSpells", L["Track spells"], content, y)) y = y - 22
+    table.insert(widgets, makeCheckbox(content, "trackItems",  L["Track items"],  content, y)) y = y - 22
+    table.insert(widgets, makeCheckbox(content, "onlySuccess", L["Only successful casts"], content, y)) y = y - 22
+    table.insert(widgets, makeCheckbox(content, "locked",      L["Lock frame"], content, y)) y = y - 30
 
     local resetBtn = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
     resetBtn:SetSize(PANEL_W - 2*PADDING, 22)
     resetBtn:SetPoint("TOPLEFT", content, "TOPLEFT", 0, y)
-    resetBtn:SetText("Reset position")
+    resetBtn:SetText(L["Reset position"])
     resetBtn:SetScript("OnClick", function()
         Castor.Config:Set("posX", 0)
         Castor.Config:Set("posY", -200)
@@ -224,19 +225,16 @@ local function smartAnchor(panel, target)
     local leftSpace  = tLeft - GAP
     local placeRight = rightSpace >= pw or rightSpace >= leftSpace
 
-    local dy = 0
-    if tTop - ph < 0 then
-        dy = ph - tTop
-    elseif tTop > sh then
-        dy = sh - tTop
-    end
+    local x = placeRight and (tRight + GAP) or (tLeft - GAP - pw)
+    local y = tTop
+
+    if x < 0 then x = 0 end
+    if x + pw > sw then x = sw - pw end
+    if y > sh then y = sh end
+    if y - ph < 0 then y = ph end
 
     panel:ClearAllPoints()
-    if placeRight then
-        panel:SetPoint("TOPLEFT", target, "TOPRIGHT", GAP, dy)
-    else
-        panel:SetPoint("TOPRIGHT", target, "TOPLEFT", -GAP, dy)
-    end
+    panel:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x, y)
 end
 
 function Options:Open(anchorFrame)

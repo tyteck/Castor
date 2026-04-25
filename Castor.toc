@@ -1,11 +1,14 @@
 ## Interface: 120000,120001,120005
 ## Title: Castor
+## Title-frFR: Castor
 ## Notes: Action tracker that matters
+## Notes-frFR: Suivi d'actions, le bon
 ## Author: Frederick Tyteca
 ## Version: 0.1
 ## IconTexture: Interface\Icons\ability_druid_prowl
 ## SavedVariables: CastorDB
 
+Locales.lua
 Castor.lua
 Config.lua
 Display.lua

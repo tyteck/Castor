@@ -49,6 +49,7 @@ dependencies:
 
 | File             | Responsibility                                       |
 |------------------|------------------------------------------------------|
+| `Locales.lua`    | UI string localization (English pivot, French)       |
 | `Castor.lua`     | Entry point, namespace, slash commands               |
 | `Config.lua`     | Defaults and persistent settings (`SavedVariables`)  |
 | `Display.lua`    | Frame, icon pool, grid layout                        |

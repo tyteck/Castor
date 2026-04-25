@@ -32,17 +32,18 @@ SLASH_CASTOR1 = "/castor"
 SLASH_CASTOR2 = "/cas"
 SlashCmdList["CASTOR"] = function(msg)
     msg = (msg or ""):lower():gsub("^%s+", ""):gsub("%s+$", "")
+    local L = Castor.L
     if msg == "lock" then
         Castor.Config:Set("locked", true)
-        print("|cff7fbfffCastor|r: frame locked")
+        print("|cff7fbfffCastor|r: " .. L["frame locked"])
     elseif msg == "unlock" then
         Castor.Config:Set("locked", false)
-        print("|cff7fbfffCastor|r: frame unlocked, drag to move")
+        print("|cff7fbfffCastor|r: " .. L["frame unlocked, drag to move"])
     elseif msg == "reset" then
         Castor.Config:Set("posX", 0)
         Castor.Config:Set("posY", -200)
         Castor.Display:ApplyPosition()
-        print("|cff7fbfffCastor|r: position reset")
+        print("|cff7fbfffCastor|r: " .. L["position reset"])
     else
         Castor.EditMode:Toggle()
     end
