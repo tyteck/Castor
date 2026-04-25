@@ -3,6 +3,7 @@
 ## Notes: Action tracker that matters
 ## Author: Frederick Tyteca
 ## Version: 0.1
+## IconTexture: Interface\Icons\ability_druid_prowl
 ## SavedVariables: CastorDB
 
 Castor.lua
